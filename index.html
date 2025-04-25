@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulators un uzdevumi</title>
+</head>
+<body>
+    <h1>Uzdevumi</h1>
+
+    <!-- Balsošanas kontrole -->
+    <h2>Balsošanas kontrole</h2>
+    <p id="vards">Vārds: Niks</p>
+    <p id="vecums">Vecums: 54</p>
+    <p id="pilsonis">Pilsonis: true</p>
+    <p id="balsot-result"></p>
+
+    <script>
+        // Balsošanas kontrole
+        let vards = "Niks";
+        let vecums = 54;
+        let irPilsonis = true;
+
+        if (vecums >= 18 && irPilsonis === true) {
+            document.getElementById("balsot-result").innerText = "Drīkst balsot.";
+        } else if (vecums >= 18 && irPilsonis === false) {
+            document.getElementById("balsot-result").innerText = "Personai ir 18 gadi, bet viņa nav pilsonis.";
+        } else if (vecums < 18 && irPilsonis === true) {
+            document.getElementById("balsot-result").innerText = "Personai nav 18 gadi, bet viņa ir pilsonis.";
+        } else {
+            document.getElementById("balsot-result").innerText = "Personai nav 18 gadi un viņa nav pilsonis.";
+        }
+    </script>
+
+     <!-- Atzīmes izvērtēšana -->
+     <h2>Atzīmes izvērtēšana</h2>
+     <p>Ievadiet atzīmi (0-100):</p>
+     <input type="number" id="atzime" placeholder="Ievadiet atzīmi">
+     <button onclick="atzimesIzverte()">Pārbaudīt atzīmi</button>
+     <p id="atzimes-result"></p>
+ 
+     <script>
+         // Atzīmes izvērtēšana
+         function atzimesIzverte() {
+             let atzime = document.getElementById("atzime").value;
+ 
+             if (atzime >= 90 && atzime <= 100) {
+                 document.getElementById("atzimes-result").innerText = "Izcili";
+             } else if (atzime >= 70 && atzime < 90) {
+                 document.getElementById("atzimes-result").innerText = "Labi";
+             } else if (atzime >= 50 && atzime < 70) {
+                 document.getElementById("atzimes-result").innerText = "Vidēji";
+             } else if (atzime >= 0 && atzime < 50) {
+                 document.getElementById("atzimes-result").innerText = "Slikti";
+             } else {
+                 document.getElementById("atzimes-result").innerText = "Nepareiza atzīme.";
+             }
+         }
+     </script>
+ 
+     <!-- Masīva elementu apstrāde -->
+     <h2>Masīva elementu apstrāde</h2>
+     <p>Saraksts:</p>
+     <ul id="masivs"></ul>
+     <button onclick="izvaditMasivu()">Izvadīt sarakstu</button>
+     <button onclick="izvaditMasivuApgriezti()">Izvadīt sarakstu apgrieztā secībā</button>
+ 
+     <script>
+         // Masīvs
+         let saraksts = ["Gurķis", "Tomāts", "Kivi", "Brokolis", "Mandarīns"];
+ 
+         // Izvade sarakstam
+         function izvaditMasivu() {
+             let masivsUl = document.getElementById("masivs");
+             masivsUl.innerHTML = "";
+             for (let i = 0; i < saraksts.length; i++) {
+                 let li = document.createElement("li");
+                 li.textContent = saraksts[i];
+                 masivsUl.appendChild(li);
+             }
+         }
+
+       // Izvade apgrieztā secībā
+       function izvaditMasivuApgriezti() {
+            let masivsUl = document.getElementById("masivs");
+            masivsUl.innerHTML = "";
+            for (let i = saraksts.length - 1; i >= 0; i--) {
+                let li = document.createElement("li");
+                li.textContent = saraksts[i];
+                masivsUl.appendChild(li);
+            }
+        }
+    </script>
+
+    <!-- Kalkulators -->
+    <h2>Kalkulators</h2>
+    <p>Ievadiet pirmo skaitli:</p>
+    <input type="text" id="operand1" placeholder="Pirmais skaitlis">
+    <p>Ievadiet otro skaitli:</p>
+    <input type="text" id="operand2" placeholder="Otrais skaitlis">
+    <p>Ievadiet operatoru (+, -, *, /):</p>
+    <input type="text" id="operator" placeholder="Operatoru">
+    <button onclick="calculate()">Aprēķināt</button>
+    <p id="calculator-result"></p>
+
+    <script>
+        // Kalkulators
+        function calculate() {
+            let operand1 = document.getElementById("operand1").value;
+            let operand2 = document.getElementById("operand2").value;
+            let operator = document.getElementById("operator").value;
+           
+            operand1 = parseFloat(operand1);
+            operand2 = parseFloat(operand2);
+           
+            if (isNaN(operand1) || isNaN(operand2)) {
+                document.getElementById("calculator-result").innerText = "Lūdzu ievadiet derīgus skaitļus.";
+                return;
+            }
+           
+            let result;
+           
+            switch(operator) {
+                case "+":
+                    result = operand1 + operand2;
+                    break;
+                case "-":
+                    result = operand1 - operand2;
+                    break;
+                case "*":
+                    result = operand1 * operand2;
+                    break;
+                case "/":
+                    if (operand2 === 0) {
+                        result = "Dalīšana ar nulli nav iespējama.";
+                    } else {
+                        result = operand1 / operand2;
+                    }
+                    break;
+                default:
+                    result = "Nepareizs operators.";
+            }
+           
+            document.getElementById("calculator-result").innerText = "Rezultāts: " + result;
+        }
+    </script>
+
+</body>
+</html>
